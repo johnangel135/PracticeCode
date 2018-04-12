@@ -2,15 +2,72 @@ package com.duong.CodeFights;
 
 import java.util.*;
 
-public class Solution {
+
+public class Intro {
     public static void main(String[] args) {
-        Solution solution = new Solution();
-        int[] a = new int[]{10, 100, 20, 50, 30};
+        Intro intro = new Intro();
+        int[] a = new int[]{1, 3, 2};
         String r = "(2 (7 (2 () ()) (6 (5 () ()) (11 () ()))) (5 () (9 (4 () ()) ())))";
+
+        System.out.println(intro.almostIncreasingSequence(a));
+    }
+
+    int matrixElementsSum(int[][] matrix) {
 
     }
 
+    boolean almostIncreasingSequence(int[] sequence) {
+        if(sequence.length <= 2) return true;
+        if(isIncrease(sequence)) return true;
+        else {
+            int current = 0,next =0;
+            for(int i=0; i < sequence.length - 1; i++){
+                if(sequence[i] >= sequence[i+1]) {
+                    current = i;
+                    next = i+1;
+                    break;
+                }
+            }
+            int[] arr1 = new int[sequence.length-1];
+            int[] arr2 = new int[sequence.length-1];
+            int index1 = 0, index2 = 0;
+            for(int i=0; i < sequence.length; i++){
+                if(i == current) arr1[index1++] = sequence[i];
+                else if(i == next) arr2[index2++] = sequence[i];
+                else {
+                    arr1[index1++] = sequence[i];
+                    arr2[index2++] = sequence[i];
+                }
+            }
+            if(isIncrease(arr1)) return true;
+            else return isIncrease(arr2);
+        }
+    }
 
+    boolean isIncrease(int[] list) {
+        for(int i=0; i < list.length - 1; i++){
+            if(list[i] >= list[i+1]) return false;
+        }
+        return true;
+    }
+
+
+    int makeArrayConsecutive2(int[] statues) {
+        Set<Integer> list = new HashSet<>();
+        if(statues.length <= 1) return 0;
+        for(int num:statues){
+            list.add(num);
+        }
+        int count = 0;
+        Iterator it = list.iterator();
+        int last = (int) it.next();
+        while (it.hasNext()){
+            int current = (int) it.next();
+            count += (current - last -1);
+            last = current;
+        }
+        return count;
+    }
     int polishNotation(String[] tokens) {
         class Helper {
             boolean isNumber(String stringRepresentation) {
